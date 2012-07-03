@@ -22,7 +22,8 @@ JQImage = function(context, options) {
   if (context && context.length > 0) {
     options = jQuery.extend({
       src: '',
-      attr: {}
+      attr: {},
+      onload: null
     }, options);
     this.options = options;
     this.context = this.create(context);
@@ -57,6 +58,9 @@ JQImage.prototype.init = function(options) {
       image.loaded = true;
       image.ratio = (image.loader.width / image.loader.height);
       image.resize();
+      if (image.options.onload) {
+        image.options.onload.call(image);
+      }
     };
   })(this);
 
