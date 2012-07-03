@@ -23,7 +23,8 @@ JQImage = function(context, options) {
     options = jQuery.extend({
       src: '',
       attr: {},
-      onload: null
+      onload: null,
+      loadstart: null
     }, options);
     this.options = options;
     this.context = this.create(context);
@@ -82,8 +83,13 @@ JQImage.prototype.load = function(src) {
 
     // Create the new image, and append to the context.
     this.img.attr({src: ''}).hide();
-    this.loader.src = src;
-    this.img.attr('src', src);
+    if (src) {
+      this.loader.src = src;
+      this.img.attr('src', src);
+      if (this.options.loadstart) {
+        this.options.loadstart.call(this);
+      }
+    }
   });
 };
 
