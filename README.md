@@ -1,0 +1,1 @@
+JQImage - A jQuery class for working with and scaling images.
