@@ -24,7 +24,8 @@ JQImage = function(context, options) {
       src: '',
       attr: {},
       onload: null,
-      loadstart: null
+      loadstart: null,
+      resizeContainer: false
     }, options);
     this.options = options;
     this.context = this.create(context);
@@ -133,12 +134,28 @@ JQImage.prototype.resize = function(width, height) {
 
     // Now set this image to the new size.
     if (this.img) {
+
+      // Scale the image to the right size.
       this.img.attr('src', this.loader.src).css({
-        marginLeft: rect.x,
-        marginTop: rect.y,
         width: rect.width,
         height: rect.height
       });
+
+      // Resize the container if they wish...
+      if (this.options.resizeContainer) {
+        this.context.css({
+          width: rect.width,
+          height: rect.height
+        });
+      }
+      else {
+
+        // Otherwise, center image inside container.
+        this.img.attr('src', this.loader.src).css({
+          marginLeft: rect.x,
+          marginTop: rect.y
+        });
+      }
     }
 
     // Show the container.
